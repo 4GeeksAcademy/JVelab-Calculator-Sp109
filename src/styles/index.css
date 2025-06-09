@@ -9,3 +9,7 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+body {
+    background-color: rgb(234, 234, 88);
+}
