@@ -1,50 +1,165 @@
 import React, { useState } from "react";
 
 const Calculator = () => {
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState("0")
+    const [operator, setOperator] = useState(null)
+    const [operateValue, setOperateValue] = useState(null)
 
     function agregarCifra(key) {
-        if (total == 0) {
+        if (total == "0") {
             setTotal(key)
         }
         else {
-            setTotal((total * 10) + key)
+            setTotal(total.concat(key))
         }
     }
 
-    function suma()
+    function clean() {
+        setTotal(0)
+        setOperateValue(null)
+        setOperator(null)
+    }
+
+    function suma() {
+        setOperateValue(total)
+        setTotal(0)
+        setOperator("sum")
+    }
+
+    function substraction() {
+        setOperateValue(total)
+        setTotal(0)
+        setOperator("subs")
+    }
+
+    function multi() {
+        setOperateValue(total)
+        setTotal(0)
+        setOperator("multi")
+    }
+
+    function division() {
+        setOperateValue(total)
+        setTotal(0)
+        setOperator("division")
+    }
+
+    function rest() {
+        setTotal(total / 100)
+    }
+
+    function coma() {
+        setTotal(total.toString())
+        if (total.includes(".")) {
+            setTotal(total)
+        }
+        else {
+            setTotal(total + ".")
+        }
+    }
+
+    function negative() {
+        if(total.includes("-")) {
+            setTotal(total.replace("-",""))
+        }
+        else {
+            setTotal("-" + total)
+        }
+    }
+
+    function operate () {
+
+        const a = parseFloat(operateValue)
+        const b = parseFloat(total)
+
+        if (operator == "sum" && operateValue != null) {
+            setTotal((a + b).toString())         
+        }
+        else if (operator == "multi" && operateValue != null) {
+            setTotal((a * b).toString())
+        }
+        else if (operator == "subs" && operateValue != null) {
+            setTotal((a - b).toString())
+        }
+        else if (operator == "division" && operateValue != null) {
+            setTotal((a / b).toString())
+        }
+        setOperateValue(null)
+        setOperator(null)
+    }
 
     return (
-        <div className="bg-black rounded d-flex flex-wrap p-2 my-5 mx-auto justify-content-beetwen text-white w-25 fs-1" >
-            <div className="row bg-dark p-2 mx-auto w-100">
-                <p className="text-end my-auto">{total}</p>
+        <div className="bg-black rounded d-flex flex-wrap p-2 pb-3 my-5 mx-auto justify-content-beetwen text-white w-25 fs-1 gap-2" >
+            <div className="row bg-dark p-2 mx-auto w-100 rounded" style={{height: "70px"}}>
+                <p className={`text-end my-auto ${total.length > 12 ? 'small' : ''}`}>{total}</p>
             </div>
-            <div className="row mt-2 mx-auto w-100 d-flex flex-nowrap">
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100">C</button>
+            <div className="row mt-2 mx-auto w-100 d-flex flex-nowrap gap-2">
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={clean}>C</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100">+-</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={negative}>+-</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100">%</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={rest}>%</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100">/</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={division}>/</button>
                 </div>
             </div>
-            <div className="row mt-2 mx-auto w-100 d-flex flex-nowrap">
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100" onClick={() => agregarCifra(1)}>1</button>
+            <div className="row mx-auto w-100 d-flex flex-nowrap gap-2">
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("7")}>7</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100" onClick={() => agregarCifra(2)}>2</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("8")}>8</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100" onClick={() => agregarCifra(3)}>3</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("9")}>9</button>
                 </div>
-                <div className="col-3 p-0">
-                    <button className="btn btn-primary w-100">+</button>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={multi}>X</button>
+                </div>
+            </div>
+            <div className="row mx-auto w-100 d-flex flex-nowrap gap-2">
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("4")}>4</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("5")}>5</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("6")}>6</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={substraction}>-</button>
+                </div>
+            </div>
+            <div className="row mx-auto w-100 d-flex flex-nowrap gap-2">
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("1")}>1</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("2")}>2</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={() => agregarCifra("3")}>3</button>
+                </div>
+                <div className="col p-0">
+                    <button className="btn btn-primary w-100 h-100" onClick={suma}>+</button>
+                </div>
+            </div>
+            <div className="row mx-auto w-100 d-flex flex-nowrap">
+                <div className="col-6 p-0 d-flex gap-2 pe-1">
+
+                        <button className="btn btn-primary w-50 h-100 mt-1" onClick={() => agregarCifra("0")}>0</button>
+
+
+                        <button className="btn btn-primary w-50 h-100 mt-1" onClick={() => coma()}>.</button>
+
+                </div>
+                <div className="col-6 p-0 ms-1 pe-1">
+                    <button className="btn btn-danger w-100 h-100" onClick={() => operate()}>=</button>
                 </div>
             </div>
         </div>
