@@ -15,33 +15,73 @@ const Calculator = () => {
     }
 
     function clean() {
-        setTotal(0)
+        setTotal("0")
         setOperateValue(null)
         setOperator(null)
     }
 
     function suma() {
-        setOperateValue(total)
-        setTotal(0)
-        setOperator("sum")
+        if (operateValue == null) {
+            setOperateValue(total)
+            setTotal("0")
+            setOperator("sum")
+        }
+        else {
+            const a = parseFloat(operateValue)
+            const b = parseFloat(total)
+
+            setOperateValue((a + b).toString())
+            setTotal("0")
+            setOperator("sum")
+        }
     }
 
     function substraction() {
-        setOperateValue(total)
-        setTotal(0)
-        setOperator("subs")
+        if (operateValue == null) {
+            setOperateValue(total)
+            setTotal("0")
+            setOperator("subs")
+        }
+        else {
+            const a = parseFloat(operateValue)
+            const b = parseFloat(total)
+
+            setOperateValue((a - b).toString())
+            setTotal("0")
+            setOperator("subs")
+        }
     }
 
     function multi() {
-        setOperateValue(total)
-        setTotal(0)
-        setOperator("multi")
+        if (operateValue == null) {
+            setOperateValue(total)
+            setTotal("0")
+            setOperator("multi")
+        }
+        else {
+            const a = parseFloat(operateValue)
+            const b = parseFloat(total)
+
+            setOperateValue((a * b).toString())
+            setTotal("0")
+            setOperator("multi")
+        }
     }
 
     function division() {
-        setOperateValue(total)
-        setTotal(0)
-        setOperator("division")
+        if (operateValue == null) {
+            setOperateValue(total)
+            setTotal("0")
+            setOperator("division")
+        }
+        else {
+            const a = parseFloat(operateValue)
+            const b = parseFloat(total)
+
+            setOperateValue((a / b).toString())
+            setTotal("0")
+            setOperator("division")
+        }
     }
 
     function rest() {
@@ -71,18 +111,19 @@ const Calculator = () => {
 
         const a = parseFloat(operateValue)
         const b = parseFloat(total)
-
-        if (operator == "sum" && operateValue != null) {
-            setTotal((a + b).toString())         
-        }
-        else if (operator == "multi" && operateValue != null) {
-            setTotal((a * b).toString())
-        }
-        else if (operator == "subs" && operateValue != null) {
-            setTotal((a - b).toString())
-        }
-        else if (operator == "division" && operateValue != null) {
-            setTotal((a / b).toString())
+        if (operateValue != null) {
+            if (operator == "sum") {
+                setTotal((a + b).toString())         
+            }
+            else if (operator == "multi") {
+                setTotal((a * b).toString())
+            }
+            else if (operator == "subs") {
+                setTotal((a - b).toString())
+            }
+            else if (operator == "division") {
+                setTotal((a / b).toString())
+            }
         }
         setOperateValue(null)
         setOperator(null)
@@ -90,8 +131,13 @@ const Calculator = () => {
 
     return (
         <div className="bg-black rounded d-flex flex-wrap p-2 pb-3 my-5 mx-auto justify-content-beetwen text-white w-25 fs-1 gap-2" >
-            <div className="row bg-dark p-2 mx-auto w-100 rounded" style={{height: "70px"}}>
-                <p className={`text-end my-auto ${total.length > 12 ? 'small' : ''}`}>{total}</p>
+            <div className="row bg-dark p-0 mx-auto w-100 rounded overflow-hidden" style={{height: "110px"}}>
+                <div className="row h-50 px-0 py-2">
+                    <p className="text-end fs-5">{operateValue}</p>
+                </div>
+                <div className="row px-0 pb-2 h-50">
+                    <p className={`text-end ${total.length > 12 ? 'small' : ''}`}>{total}</p>
+                </div>
             </div>
             <div className="row mt-2 mx-auto w-100 d-flex flex-nowrap gap-2">
                 <div className="col p-0">
